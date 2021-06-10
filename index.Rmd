@@ -2,7 +2,7 @@
 title: "Untitled"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
+    orientation: rows
     vertical_layout: fill
 ---
 
@@ -28,10 +28,13 @@ MomData$degree <- factor(MomData$degree,
                          ordered = T)
 ```
 
-Column {data-width=650}
+父母親教育程度
+=======================================================================
+
+Row
 -----------------------------------------------------------------------
 
-### Chart A
+### 父親教育程度
 
 ```{r}
 p <- ggplot(DadData) +
@@ -45,10 +48,8 @@ p <- ggplot(DadData) +
 ggplotly(p)
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Chart B
+### 母親教育程度
 
 ```{r}
 q <- ggplot(MomData) +
