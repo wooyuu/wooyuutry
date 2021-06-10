@@ -1,0 +1,64 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(plotly)
+library(plyr)
+library(flexdashboard)
+
+library(dplyr)
+library(ggplot2)
+
+library(readxl)
+setwd("C:\\Users\\ASUS\\Desktop\\資料科學導論")
+DadData <- as.data.frame(read_excel("C:\\Users\\ASUS\\Desktop\\資料科學導論\\父親教育程度.xlsx"))
+MomData <- as.data.frame(read_excel("C:\\Users\\ASUS\\Desktop\\資料科學導論\\母親教育程度.xlsx"))
+
+DadData$degree <- factor(MomData$degree, 
+                   levels = c("國中及以下", "高中職","專科", "大學","碩士","博士") , 
+                   ordered = T)
+MomData$degree <- factor(MomData$degree, 
+                         levels = c("國中及以下", "高中職","專科", "大學","碩士","博士") , 
+                         ordered = T)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+p <- ggplot(DadData) +
+    geom_line(mapping = aes(x = degree, y = law, group=1),stat = "identity", color="#EA7500", size=1) +
+    geom_line(mapping = aes(x = degree, y = students, group=1),stat = "identity", color="#66B3FF", size=1) +
+    geom_line(mapping = aes(x = degree, y = all, group=1),stat = "identity", color="#AE8F00", size=1) +
+    labs(x = "父親教育程度", y = "percentage (%)") + 
+    geom_point(mapping = aes(x = degree, y = law, group=1), color = "#D26900") +
+    geom_point(mapping = aes(x = degree, y = students, group=1), color = "#0080FF") +
+    geom_point(mapping = aes(x = degree, y = all, group=1), color = "#796400")
+ggplotly(p)
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+q <- ggplot(MomData) +
+    geom_line(mapping = aes(x = degree, y = law, group=1),stat = "identity", color="#EA7500", size=1) +
+    geom_line(mapping = aes(x = degree, y = students, group=1),stat = "identity", color="#66B3FF", size=1) +
+    geom_line(mapping = aes(x = degree, y = all, group=1),stat = "identity", color="#AE8F00", size=1) +
+    labs(x = "母親教育程度", y = "percentage (%)") + 
+    geom_point(mapping = aes(x = degree, y = law, group=1), color = "#D26900") +
+    geom_point(mapping = aes(x = degree, y = students, group=1), color = "#0080FF") +
+    geom_point(mapping = aes(x = degree, y = all, group=1), color = "#796400")
+
+ggplotly(q)
+```
